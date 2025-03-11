@@ -1,10 +1,10 @@
 import ChatForm from "./components/ChatForm";
 import Container from "react-bootstrap/Container";
-
+import Header from "./components/Header";
 function App() {
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
       <Container>
         <ChatForm />
       </Container>
