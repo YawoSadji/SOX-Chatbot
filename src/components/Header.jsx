@@ -9,7 +9,7 @@ export default function Header() {
         <Navbar.Brand href="#home">SOXBOT</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="flex-grow-1 justify-content-end">
             <Nav.Link href="#home">History</Nav.Link>
             <Nav.Link href="#link">Logout</Nav.Link>
           </Nav>
