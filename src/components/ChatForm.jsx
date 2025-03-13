@@ -35,21 +35,32 @@ export default function ChatForm() {
   };
 
   return (
-    <Container className="mt-5">
-      <Card style={{ width: "50rem" }}>
+    <Container className="flex-column mt-5 align-items-center">
+      <Card>
         <Card.Body>
-          <Card.Title>Card Title</Card.Title>
+          <Card.Title>PoweredByGemini</Card.Title>
           <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            {chatHistory.map((chat, index) => (
+              <div
+                className={
+                  chat.type === "user"
+                    ? "text-muted bg-body-tertiary p-2 rounded"
+                    : "text-dark bg-body-secondary p-2 rounded"
+                }
+                key={index}
+              >
+                <strong>{chat.type === "user" ? "You:  " : "SOXBOT:  "}</strong>
+                {chat.message}
+              </div>
+            ))}
           </Card.Text>
         </Card.Body>
       </Card>
       <Form className="mt-2" onSubmit={handleUserMessage}>
         <Row className="align-items-center">
-          <Col xs="auto">
+          <Col>
             <Form.Control
-              className="mr-sm-2"
+              size="lg"
               type="text"
               value={userMessage}
               onChange={(e) => setUserMessage(e.target.value)}
