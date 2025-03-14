@@ -35,7 +35,7 @@ export default function ChatForm() {
   };
 
   return (
-    <Container className="flex-column mt-5 align-items-center">
+    <Container className="mt-5">
       <Card>
         <Card.Body>
           <Card.Title>PoweredByGemini</Card.Title>
