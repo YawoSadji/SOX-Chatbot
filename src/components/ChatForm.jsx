@@ -3,6 +3,7 @@ import { Col, Button, Row, Form, Container, Card } from "react-bootstrap";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+import { allowedTopics } from "./allowedTopics";
 
 export default function ChatForm() {
   const [userMessage, setUserMessage] = useState("");
@@ -21,8 +22,14 @@ export default function ChatForm() {
       if (!result || !result.response) {
         throw new Error("Invalid API response");
       }
+      if (
+        !allowedTopics.some((topic) =>
+          userMessage.toLowerCase().includes(topic)
+        )
+      ) {
+        throw new Error("Message topic not allowed");
+      }
       const botResponse = result.response.text();
-      console.log(result.response);
       setChatHistory((prevHistory) => [
         ...prevHistory,
         { type: "user", message: userMessage },
