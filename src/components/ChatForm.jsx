@@ -14,6 +14,7 @@ export default function ChatForm() {
   };
   const sendMessage = async () => {
     if (userMessage.trim() === "") return;
+
     setIsLoading(true);
     try {
       const result = await model.generateContent(userMessage);
@@ -21,6 +22,7 @@ export default function ChatForm() {
         throw new Error("Invalid API response");
       }
       const botResponse = result.response.text();
+      console.log(result.response);
       setChatHistory((prevHistory) => [
         ...prevHistory,
         { type: "user", message: userMessage },
@@ -41,7 +43,8 @@ export default function ChatForm() {
           <Card.Title>PoweredByGemini</Card.Title>
           <Card.Text>
             {chatHistory.map((chat, index) => (
-              <div
+              <span
+                style={{ display: "block" }}
                 className={
                   chat.type === "user"
                     ? "text-muted bg-body-tertiary p-2 rounded"
@@ -51,7 +54,7 @@ export default function ChatForm() {
               >
                 <strong>{chat.type === "user" ? "You:  " : "SOXBOT:  "}</strong>
                 {chat.message}
-              </div>
+              </span>
             ))}
           </Card.Text>
         </Card.Body>
