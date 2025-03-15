@@ -2,8 +2,12 @@ import { useState } from "react";
 import { Col, Button, Row, Form, Container, Card } from "react-bootstrap";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-import { allowedTopics } from "./allowedTopics";
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.0-flash",
+  systemInstruction:
+    "You are an assistant specialized in SOX compliance. Only respond to questions related to SOX regulations, financial controls, auditing best practices, compliance topics, CPRA and  Segregation of duties'. Do not answer questions unrelated to SOX, CPRA and Segregation of duties. If asked who built you, Say Yawo Sadji did.",
+});
+// import { allowedTopics } from "./allowedTopics";
 
 export default function ChatForm() {
   const [userMessage, setUserMessage] = useState("");
@@ -13,6 +17,20 @@ export default function ChatForm() {
     e.preventDefault();
     sendMessage();
   };
+
+  // const chatRequest = {
+  //   contents: [
+  //     {
+  //       role: "user",
+  //       parts: [
+  //         {
+  //           text: `You are an assistant specialized in SOX compliance. Only respond to questions related to SOX regulations, financial controls, auditing best practices, compliance topics, CPRA and  Segregation of duties'. Do not answer questions unrelated to SOX, CPRA and Segregation of duties. If asked who built you, Say Yawo Sadji did. The question is: ${userMessage}`,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // };
+
   const sendMessage = async () => {
     if (userMessage.trim() === "") return;
 
@@ -22,13 +40,13 @@ export default function ChatForm() {
       if (!result || !result.response) {
         throw new Error("Invalid API response");
       }
-      if (
-        !allowedTopics.some((topic) =>
-          userMessage.toLowerCase().includes(topic)
-        )
-      ) {
-        throw new Error("Message topic not allowed");
-      }
+      // if (
+      //   !allowedTopics.some((topic) =>
+      //     userMessage.toLowerCase().includes(topic)
+      //   )
+      // ) {
+      //   throw new Error("Message topic not allowed");
+      // }
       const botResponse = result.response.text();
       setChatHistory((prevHistory) => [
         ...prevHistory,
@@ -37,6 +55,13 @@ export default function ChatForm() {
       ]);
     } catch (error) {
       console.error(error);
+      setChatHistory((prevHistory) => [
+        ...prevHistory,
+        {
+          type: "bot",
+          message: "🚫 Sorry, I can only discuss SOX compliance topics.",
+        },
+      ]);
     } finally {
       setUserMessage("");
       setIsLoading(false);
@@ -47,7 +72,7 @@ export default function ChatForm() {
     <Container className="mt-5">
       <Card>
         <Card.Body>
-          <Card.Title>PoweredByGemini</Card.Title>
+          <Card.Title>I'm a SOX chatbot powered by Google Gemini</Card.Title>
           <Card.Text>
             {chatHistory.map((chat, index) => (
               <span
