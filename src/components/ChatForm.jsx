@@ -56,7 +56,7 @@ export default function ChatForm() {
           </Card.Text>
         </Card.Body>
       </Card>
-      <Form className="mt-2" onSubmit={handleUserMessage}>
+      <Form className="mt-2 mb-5" onSubmit={handleUserMessage}>
         <Row className="align-items-center">
           <Col>
             <Form.Control
