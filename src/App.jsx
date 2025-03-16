@@ -4,9 +4,11 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 function App() {
   return (
-    <Container className="flex-column min-vh-100 d-flex">
+    <Container className="d-flex flex-column min-vh-100">
       <Header />
-      <ChatForm />
+      <div className="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
+        <ChatForm />
+      </div>
       <Footer />
     </Container>
   );

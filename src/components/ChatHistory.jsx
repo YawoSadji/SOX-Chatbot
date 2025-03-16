@@ -2,9 +2,12 @@ import { Card } from "react-bootstrap";
 
 export default function ChatHistory({ chatHistory }) {
   return (
-    <Card>
+    <Card className="mb-2">
       <Card.Body>
-        <Card.Title>I'm a SOX chatbot powered by Google Gemini</Card.Title>
+        <Card.Title className="text-center">
+          Welcome to SOXBOT. I'm a SOX chatbot powered by Google Gemini. Ask me
+          about SOX or CPRA
+        </Card.Title>
         <Card.Text>
           {chatHistory.map((chat, index) => (
             <span

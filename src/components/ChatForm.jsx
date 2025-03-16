@@ -49,7 +49,7 @@ export default function ChatForm() {
   };
 
   return (
-    <Container className="mt-5">
+    <Container>
       <ChatHistory chatHistory={chatHistory} />
       <Form className="mt-2 mb-5" onSubmit={handleUserMessage}>
         <Row className="align-items-center">
