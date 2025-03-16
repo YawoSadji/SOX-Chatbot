@@ -1,13 +1,10 @@
 import { Card } from "react-bootstrap";
-
+import CardTitle from "./CardTitle";
 export default function ChatHistory({ chatHistory }) {
   return (
     <Card className="mb-2">
       <Card.Body>
-        <Card.Title className="text-center">
-          Welcome to SOXBOT. I'm a SOX chatbot powered by Google Gemini. Ask me
-          about SOX or CPRA
-        </Card.Title>
+        <CardTitle />
         <Card.Text>
           {chatHistory.map((chat, index) => (
             <span
