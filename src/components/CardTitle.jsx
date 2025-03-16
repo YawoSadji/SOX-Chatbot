@@ -6,7 +6,7 @@ const texts = [
   "CPRA",
   "Segregation of Duties",
   "Financial Controls",
-  "Audit Best Practices",
+  "SOX Audit Best Practices",
 ];
 
 export default function AnimatedText() {
@@ -15,7 +15,7 @@ export default function AnimatedText() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % texts.length);
-    }, 3500);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
