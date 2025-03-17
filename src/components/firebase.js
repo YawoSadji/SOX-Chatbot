@@ -46,8 +46,4 @@ const signOutUser = async () => {
   }
 };
 
-const authStateListener = (callback) => {
-  return onAuthStateChanged(auth, callback);
-};
-
-export { signInWithGoogle, signOutUser, authStateListener, auth };
+export { signInWithGoogle, signOutUser, auth };

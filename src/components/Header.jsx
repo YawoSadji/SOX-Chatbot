@@ -1,13 +1,13 @@
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, logout } from "./firebase";
+import { auth, signOutUser } from "./firebase";
 import { toast } from "react-toastify";
 
 export default function Header() {
   const [user] = useAuthState(auth);
   const handleLogout = async () => {
     try {
-      await logout();
+      await signOutUser();
       toast.info("You have been logged out.");
     } catch (error) {
       toast.error("Log out failed. Please try again.");
