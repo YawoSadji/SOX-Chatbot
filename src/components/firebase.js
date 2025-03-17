@@ -20,30 +20,34 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
+const app = initializeApp(firebaseConfig);
+const provider = new GoogleAuthProvider();
+const auth = getAuth(app);
 
 const signInWithGoogle = async () => {
-  const auth = getAuth();
-  const provider = new GoogleAuthProvider();
   try {
     const result = await signInWithPopup(auth, provider);
     toast.success(`Welcome, ${result.user.displayName}!`);
     return result.user;
   } catch (error) {
+    toast.error("Login failed. Please try again.");
     console.error("Sign-in error:", error);
     return null;
   }
 };
 
 const signOutUser = async () => {
-  const auth = getAuth();
   try {
+    toast.info("You have been logged out.");
     await signOut(auth);
   } catch (error) {
+    toast.error("Log out failed. Please try again.");
     console.error("Log out error:", error);
   }
 };
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+const authStateListener = (callback) => {
+  return onAuthStateChanged(auth, callback);
+};
+
+export { signInWithGoogle, signOutUser, authStateListener, auth };
