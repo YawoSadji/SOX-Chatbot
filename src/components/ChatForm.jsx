@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Col, Button, Row, Form, Container } from "react-bootstrap";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, saveChatMessage } from "./firebase";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatHistory from "./ChatHistory";
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
@@ -10,6 +12,7 @@ const model = genAI.getGenerativeModel({
 });
 
 export default function ChatForm() {
+  const [user] = useAuthState(auth);
   const [userMessage, setUserMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +22,7 @@ export default function ChatForm() {
   };
 
   const sendMessage = async () => {
-    if (userMessage.trim() === "") return;
+    if (!user || userMessage.trim() === "") return;
 
     setIsLoading(true);
     try {
@@ -28,6 +31,8 @@ export default function ChatForm() {
         throw new Error("Invalid API response");
       }
       const botResponse = result.response.text();
+      await saveChatMessage(user.uid, userMessage, "user");
+      await saveChatMessage(user.uid, botResponse, "bot");
       setChatHistory((prevHistory) => [
         ...prevHistory,
         { type: "user", message: userMessage },
