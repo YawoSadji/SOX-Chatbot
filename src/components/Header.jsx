@@ -2,6 +2,7 @@ import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, signOutUser } from "./firebase";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const [user] = useAuthState(auth);
@@ -17,11 +18,17 @@ export default function Header() {
   return (
     <Navbar sticky="top" expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">SOXBOT</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/chat">
+          SOXBOT
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="flex-grow-1 justify-content-end">
-            {user && <Nav.Link href="/history">History</Nav.Link>}
+            {user && (
+              <Nav.Link as={Link} to="/history">
+                History
+              </Nav.Link>
+            )}
             {user && (
               <Button variant="dark" onClick={handleLogout}>
                 Logout
