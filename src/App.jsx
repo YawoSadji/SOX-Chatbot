@@ -2,6 +2,7 @@ import ChatForm from "./components/ChatForm";
 import Container from "react-bootstrap/Container";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import AllHistory from "./components/AllHistory";
 import {
   BrowserRouter as Router,
   Routes,
@@ -30,6 +31,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ChatForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/history"
+              element={
+                <ProtectedRoute>
+                  <AllHistory />
                 </ProtectedRoute>
               }
             />

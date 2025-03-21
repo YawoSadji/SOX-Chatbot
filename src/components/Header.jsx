@@ -21,7 +21,7 @@ export default function Header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="flex-grow-1 justify-content-end">
-            {user && <Nav.Link href="#home">History</Nav.Link>}
+            {user && <Nav.Link href="/history">History</Nav.Link>}
             {user && (
               <Button variant="dark" onClick={handleLogout}>
                 Logout
