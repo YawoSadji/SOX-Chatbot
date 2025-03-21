@@ -33,7 +33,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <ChatForm />
           </Routes>
         </div>
         <Footer />

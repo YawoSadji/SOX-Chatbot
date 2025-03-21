@@ -23,7 +23,7 @@ export default function Header() {
           <Nav className="flex-grow-1 justify-content-end">
             {user && <Nav.Link href="#home">History</Nav.Link>}
             {user && (
-              <Button variant="outline-danger" onClick={handleLogout}>
+              <Button variant="dark" onClick={handleLogout}>
                 Logout
               </Button>
             )}

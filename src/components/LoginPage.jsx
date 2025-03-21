@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
-import { Container } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, signInWithGoogle } from "./firebase";
 import { useEffect } from "react";
+import AnimatedLoginWelcome from "./AnimatedLoginWelcome";
+
 export default function LoginPage() {
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
@@ -15,9 +17,11 @@ export default function LoginPage() {
   }, [user, navigate]);
 
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100">
-      <h1>Welcome to SOXBOT</h1>
+    <Card className="d-flex flex-column justify-content-center align-items-center p-5">
+      <Card.Title className="mb-5">
+        <AnimatedLoginWelcome />
+      </Card.Title>
       <GoogleButton onClick={signInWithGoogle} />
-    </Container>
+    </Card>
   );
 }
