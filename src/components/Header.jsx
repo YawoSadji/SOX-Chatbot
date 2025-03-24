@@ -2,10 +2,11 @@ import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, signOutUser } from "./firebase";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Header() {
   const [user] = useAuthState(auth);
+  const location = useLocation();
   const handleLogout = async () => {
     try {
       await signOutUser();
@@ -25,8 +26,12 @@ export default function Header() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="flex-grow-1 justify-content-end">
             {user && (
-              <Nav.Link as={Link} to="/history">
-                History
+              <Nav.Link
+                className="border border-dark rounded-3 me-3"
+                as={Link}
+                to={location.pathname === "/history" ? "/chat" : "/history"}
+              >
+                {location.pathname === "/history" ? "Back" : "History"}
               </Nav.Link>
             )}
             {user && (
