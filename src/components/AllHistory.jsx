@@ -34,7 +34,7 @@ export default function AllHistory() {
   };
   return (
     <Card className="p-3">
-      <Card.Title>Your Chat History</Card.Title>
+      <Card.Title className="text-center">Your Chat History</Card.Title>
       <ListGroup variant="flush">
         {messages.length === 0 ? (
           <ListGroup.Item>No chat history available.</ListGroup.Item>
