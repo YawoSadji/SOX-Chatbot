@@ -20,7 +20,9 @@ export default function ChatForm() {
     e.preventDefault();
     sendMessage();
   };
-
+  const clearChat = () => {
+    setChatHistory([]);
+  };
   const sendMessage = async () => {
     if (!user || userMessage.trim() === "") return;
 
@@ -56,7 +58,7 @@ export default function ChatForm() {
   return (
     <Container>
       <ChatHistory chatHistory={chatHistory} />
-      <Form className="mt-2 mb-5" onSubmit={handleUserMessage}>
+      <Form className="mt-2 mb-2" onSubmit={handleUserMessage}>
         <Row className="align-items-center">
           <Col>
             <Form.Control
@@ -75,6 +77,9 @@ export default function ChatForm() {
           </Col>
         </Row>
       </Form>
+      <Button onClick={clearChat} variant="light" disabled={isLoading}>
+        {isLoading ? "Clearing..." : "Clear Chat"}
+      </Button>
     </Container>
   );
 }
