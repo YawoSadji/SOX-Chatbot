@@ -77,9 +77,15 @@ export default function ChatForm() {
           </Col>
         </Row>
       </Form>
-      <Button onClick={clearChat} variant="light" disabled={isLoading}>
-        Clear Chat
-      </Button>
+      {chatHistory.length > 0 && (
+        <Button
+          onClick={clearChat}
+          variant="outline-secondary"
+          disabled={isLoading}
+        >
+          Clear Chat
+        </Button>
+      )}
     </Container>
   );
 }

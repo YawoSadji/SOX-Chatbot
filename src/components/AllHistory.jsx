@@ -10,7 +10,7 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { Card, Container, ListGroup } from "react-bootstrap";
+import { Card, Col, Row, ListGroup } from "react-bootstrap";
 import { BsTrash } from "react-icons/bs";
 export default function AllHistory() {
   const [user] = useAuthState(auth);
@@ -85,25 +85,25 @@ export default function AllHistory() {
               key={group.id}
               className="d-flex justify-content-between align-items-center"
             >
-              <div>
-                <p className="text-muted bg-body-tertiary p-2 rounded">
-                  <strong>You: </strong>
+              <Col className="d-flex flex-column">
+                <Row className="text-muted bg-body-tertiary p-2 rounded">
+                  <Row className="fw-bold">You: </Row>
                   {group.userMessage}
-                </p>
+                </Row>
                 {group.botResponse && (
-                  <p className="bg-body-secondary p-2 rounded">
-                    <strong>SOXBOT: </strong>
+                  <Row className="bg-body-secondary p-2 rounded mb-2">
+                    <Row className="fw-bold">SOXBOT: </Row>
                     {group.botResponse}
-                  </p>
+                  </Row>
                 )}
-              </div>
-              <Container>
-                <BsTrash
-                  className="d-flex m-2 text-danger"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => deleteMessageGroup(group.id)}
-                />
-              </Container>
+                <Row>
+                  <BsTrash
+                    className="text-danger"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => deleteMessageGroup(group.id)}
+                  />
+                </Row>
+              </Col>
             </ListGroup.Item>
           ))
         )}
