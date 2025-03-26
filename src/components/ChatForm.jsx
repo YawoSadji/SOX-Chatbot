@@ -78,7 +78,7 @@ export default function ChatForm() {
         </Row>
       </Form>
       <Button onClick={clearChat} variant="light" disabled={isLoading}>
-        {isLoading ? "Clearing..." : "Clear Chat"}
+        Clear Chat
       </Button>
     </Container>
   );
