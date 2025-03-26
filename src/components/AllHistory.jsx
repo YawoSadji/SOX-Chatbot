@@ -2,13 +2,20 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "./firebase";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
-import { Card, ListGroup } from "react-bootstrap";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
+import { Card, Container, ListGroup } from "react-bootstrap";
+import { BsTrash } from "react-icons/bs";
 export default function AllHistory() {
   const [user] = useAuthState(auth);
-  const [messages, setMessages] = useState([]);
-  const [showToast, setShowToast] = useState(false);
-  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [messageGroups, setMessageGroups] = useState([]);
+
   useEffect(() => {
     if (user) {
       fetchMessages();
@@ -20,43 +27,83 @@ export default function AllHistory() {
       if (!user) return;
       const messagesRef = collection(db, "users", user.uid, "messages");
       const querySnapshot = await getDocs(
-        query(messagesRef, orderBy("createdAt", "desc"))
+        query(messagesRef, orderBy("createdAt", "asc"))
       );
-      const fetchedMessages = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setMessages(fetchedMessages);
+
+      //grouping messages by user and bot response
+      const groupedMessages = [];
+      let currentGroup = null;
+      querySnapshot.docs.forEach((doc) => {
+        const message = { id: doc.id, ...doc.data() };
+
+        if (message.sender === "user") {
+          //creating a group with the user's message
+          currentGroup = {
+            id: message.id,
+            userMessage: message.message,
+            botResponse: null,
+          };
+        } else if (message.sender === "bot" && currentGroup) {
+          //adding the bot's response to the current group
+          currentGroup.botResponse = message.message;
+          groupedMessages.push(currentGroup);
+          currentGroup = null;
+        }
+      });
+      setMessageGroups(groupedMessages);
     } catch (error) {
       console.error("Error fetching messages:", error);
       toast.error("Failed to load history. Please try again.");
     }
   };
+
+  const deleteMessageGroup = async (groupId) => {
+    try {
+      if (!user) return;
+      //deleting both user and bot message in the group
+      const userMessageRef = doc(db, "users", user.uid, "messages", groupId);
+      await deleteDoc(userMessageRef);
+      //filtering out the deleted group from the state
+      setMessageGroups((prevGroups) =>
+        prevGroups.filter((group) => group.id !== groupId)
+      );
+    } catch (error) {
+      console.error("Error deleting message:", error);
+      toast.error("Failed to delete message. Please try again.");
+    }
+  };
+
   return (
     <Card className="p-3">
       <Card.Title className="text-center">Your Chat History</Card.Title>
       <ListGroup variant="flush">
-        {messages.length === 0 ? (
+        {messageGroups.length === 0 ? (
           <ListGroup.Item>No chat history available.</ListGroup.Item>
         ) : (
-          messages.map((message) => (
+          messageGroups.map((group) => (
             <ListGroup.Item
-              key={message.id}
+              key={group.id}
               className="d-flex justify-content-between align-items-center"
             >
-              <span
-                style={{ display: "block" }}
-                className={
-                  message.sender === "user"
-                    ? "text-muted bg-body-tertiary p-2 rounded"
-                    : "text-dark bg-body-secondary p-2 rounded"
-                }
-              >
-                <strong>
-                  {message.sender === "user" ? "You:  " : "SOXBOT:  "}
-                </strong>
-                {message.message}
-              </span>
+              <div>
+                <p className="text-muted bg-body-tertiary p-2 rounded">
+                  <strong>You: </strong>
+                  {group.userMessage}
+                </p>
+                {group.botResponse && (
+                  <p className="bg-body-secondary p-2 rounded">
+                    <strong>SOXBOT: </strong>
+                    {group.botResponse}
+                  </p>
+                )}
+              </div>
+              <Container>
+                <BsTrash
+                  className="d-flex m-2 text-danger"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => deleteMessageGroup(group.id)}
+                />
+              </Container>
             </ListGroup.Item>
           ))
         )}
