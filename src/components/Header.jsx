@@ -3,7 +3,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, signOutUser } from "./firebase";
 import { toast } from "react-toastify";
 import { Link, useLocation } from "react-router-dom";
-
 export default function Header() {
   const [user] = useAuthState(auth);
   const location = useLocation();
@@ -22,6 +21,11 @@ export default function Header() {
         <Navbar.Brand as={Link} to="/chat">
           SOXBOT
         </Navbar.Brand>
+        {user && (
+          <Navbar.Text className="me-auto">
+            Hello {user.displayName || ""}
+          </Navbar.Text>
+        )}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="flex-grow-1 justify-content-end">
