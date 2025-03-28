@@ -28,11 +28,20 @@ export default function ChatForm() {
 
     setIsLoading(true);
     try {
-      const result = await model.generateContent(userMessage);
-      if (!result || !result.response) {
+      const response = await fetch("http://localhost:3001/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userMessage }),
+      });
+
+      const data = await response.json();
+      if (!data || !data.response) {
         throw new Error("Invalid API response");
       }
-      const botResponse = result.response.text();
+
+      const botResponse = data.response;
       await saveChatMessage(user.uid, userMessage, "user");
       await saveChatMessage(user.uid, botResponse, "bot");
       setChatHistory((prevHistory) => [
