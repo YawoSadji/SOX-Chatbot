@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Col, Button, Row, Form, Container } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, saveChatMessage } from "./firebase";
-import { GenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatHistory from "./ChatHistory";
-const genAI = new GenerativeAI(import.meta.env.VITE_API_KEY);
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 const model = genAI.getGenerativeModel({
   model: "gemini-2.0-flash",
   systemInstruction:
