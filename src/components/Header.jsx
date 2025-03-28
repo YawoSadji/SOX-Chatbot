@@ -22,8 +22,8 @@ export default function Header() {
           SOXBOT
         </Navbar.Brand>
         {user && (
-          <Navbar.Text className="me-auto">
-            Hello {user.displayName || ""}
+          <Navbar.Text className="me-auto p-2">
+            Welcome {user.displayName || ""}
           </Navbar.Text>
         )}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
