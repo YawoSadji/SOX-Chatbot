@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Col, Button, Row, Form, Container } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, saveChatMessage } from "./firebase";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import ChatHistory from "./ChatHistory";
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
-const model = genAI.getGenerativeModel({
-  model: "gemini-2.0-flash",
-  systemInstruction:
-    "You are an assistant specialized in SOX compliance. Only respond to questions related to SOX regulations, financial controls, auditing best practices, compliance topics, CPRA and  Segregation of duties'. Do not answer questions unrelated to SOX, CPRA and Segregation of duties. If asked who built you, Say Yawo Sadji did.",
-});
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+// const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
+// const model = genAI.getGenerativeModel({
+//   model: "gemini-2.0-flash",
+//   systemInstruction:
+//     "You are an assistant specialized in SOX compliance. Only respond to questions related to SOX regulations, financial controls, auditing best practices, compliance topics, CPRA and  Segregation of duties'. Do not answer questions unrelated to SOX, CPRA and Segregation of duties. If asked who built you, Say Yawo Sadji did.",
+// });
 
 export default function ChatForm() {
   const [user] = useAuthState(auth);
