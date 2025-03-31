@@ -28,7 +28,7 @@ export default function ChatForm() {
 
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:3001/generate", {
+      const response = await fetch("https://sox-chatbot.onrender.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
