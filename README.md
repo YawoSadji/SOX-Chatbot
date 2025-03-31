@@ -21,7 +21,7 @@ Login: Navigate to the login page and sign in with your Google account.
 Chat: Interact with the chatbot and ask questions related to SOX compliance.
 View History: Access your chat history from the "/history" page.
 Delete chat from History: Delete specific chat from the "/history" page.
-Packages
+#Packages:
 Here are the main packages used in this project:
 
 react
