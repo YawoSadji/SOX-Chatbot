@@ -27,7 +27,7 @@ export default function AllHistory() {
       if (!user) return;
       const messagesRef = collection(db, "users", user.uid, "messages");
       const querySnapshot = await getDocs(
-        query(messagesRef, orderBy("createdAt", "asc"))
+        query(messagesRef, orderBy("createdAt", "desc"))
       );
 
       //grouping messages by user and bot response
