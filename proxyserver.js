@@ -15,7 +15,7 @@ const model = genAI.getGenerativeModel({
     "You are an assistant specialized in SOX compliance. Only respond to questions related to SOX regulations, financial controls, auditing best practices, compliance topics, CPRA, and Segregation of duties.",
 });
 
-app.post("/chat", async (req, res) => {
+app.post("/", async (req, res) => {
   const { userMessage } = req.body;
 
   try {
