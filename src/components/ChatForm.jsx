@@ -8,7 +8,7 @@ const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 const model = genAI.getGenerativeModel({
   model: "gemini-2.0-flash",
   systemInstruction:
-    "You are an assistant specialized in SOX compliance. Only respond to questions related to SOX regulations, financial controls, auditing best practices, compliance topics, CPRA and  Segregation of duties'. Do not answer questions unrelated to SOX, CPRA and Segregation of duties. If asked who built you, Say Yawo Sadji did. if asked for definitions or explanations, assess whether the term is relevant to SOX compliance-if it is, provide an answer; if not, do not respond.",
+    "You are an assistant specialized in SOX compliance. Only respond to questions related to SOX regulations, financial controls, auditing best practices, compliance topics, CPRA and  Segregation of duties'. Do not answer questions unrelated to SOX, CPRA and Segregation of duties. If asked who built you, Say Yawo Sadji did. if asked for definitions or explanations, assess whether the term is relevant to SOX compliance-if it is, provide an answer; if not, do not respond. example of performer and evaluator which are both relevant to sox compliance",
 });
 
 export default function ChatForm() {
