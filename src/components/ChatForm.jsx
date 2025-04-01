@@ -79,6 +79,7 @@ export default function ChatForm() {
       </Form>
       {chatHistory.length > 0 && (
         <Button
+          className="mt-1 mb-2"
           onClick={clearChat}
           variant="outline-secondary"
           disabled={isLoading}
