@@ -10,6 +10,14 @@ export default defineConfig({
     environment: "jsdom",
   },
   server: {
+    hmr: true,
     historyApiFallback: true,
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: undefined,
+        },
+      },
+    },
   },
 });
