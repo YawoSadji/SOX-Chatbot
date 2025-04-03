@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "./firebase";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import {
   collection,
   getDocs,
@@ -10,17 +10,29 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { Card, Col, Row, ListGroup } from "react-bootstrap";
+import { Card, Col, Row, ListGroup, Form } from "react-bootstrap";
 import { BsTrash } from "react-icons/bs";
 export default function AllHistory() {
   const [user] = useAuthState(auth);
   const [messageGroups, setMessageGroups] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     if (user) {
       fetchMessages();
     }
   }, [user]);
+
+  useEffect(() => {
+    const filtered = messageGroups.filter(
+      (group) =>
+        group.userMessage.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (group.botResponse &&
+          group.botResponse.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+    setSearchResults(filtered);
+  }, [searchTerm, messageGroups]);
 
   const fetchMessages = async () => {
     try {
@@ -75,12 +87,27 @@ export default function AllHistory() {
 
   return (
     <Card className="p-3">
-      <Card.Title className="text-center">Your Chat History</Card.Title>
+      <Row className="align-items-center mb-3">
+        <Col>
+          <Card.Title className="mb-0 text-center">
+            Your Chat History
+          </Card.Title>
+        </Col>
+        <Col xs="auto">
+          <Form.Control
+            type="text"
+            placeholder="Search..."
+            className="form-control-sm"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </Col>
+      </Row>
       <ListGroup variant="flush">
-        {messageGroups.length === 0 ? (
-          <ListGroup.Item>No chat history available.</ListGroup.Item>
+        {searchResults.length === 0 ? (
+          <ListGroup.Item>No messages found.</ListGroup.Item>
         ) : (
-          messageGroups.map((group) => (
+          searchResults.map((group) => (
             <ListGroup.Item
               key={group.id}
               className="d-flex justify-content-between align-items-center"
