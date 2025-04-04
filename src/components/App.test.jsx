@@ -5,5 +5,5 @@ import { render, screen } from "@testing-library/react";
 
 test("renders app", () => {
   render(<App />);
-  expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
+  expect(screen.getByText("SOXBOT")).toBeInTheDocument();
 });
