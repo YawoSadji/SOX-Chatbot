@@ -97,6 +97,7 @@ export default function AllHistory() {
           <Form.Control
             type="text"
             placeholder="Search..."
+            aria-label="Search chat history"
             className="form-control-sm"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
